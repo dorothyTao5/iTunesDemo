@@ -12,12 +12,7 @@ class SearchingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemPink.withAlphaComponent(0.3)
-        fetchSongs(searchedStr: "mayday")
-        
     }
-
-
-    
 }
 //MARK: - API
 extension SearchingViewController {

@@ -20,8 +20,8 @@ enum SearchRouter: APIConfiguration {
 
     var path: String {
         switch self {
-        case .getSearch(let input):
-            return "/search?term=\(input.term)"
+        case .getSearch:
+            return "/search"
         }
     }
     
@@ -39,10 +39,10 @@ enum SearchRouter: APIConfiguration {
 
         log.info(description)
 
-//        switch self {
-//        case let .getSearch(input):
-//            request = try URLEncodedFormParameterEncoder().encode(input, into: request)
-//        }
+        switch self {
+        case let .getSearch(input):
+            request = try URLEncodedFormParameterEncoder().encode(input, into: request)
+        }
         return request
     }
 }

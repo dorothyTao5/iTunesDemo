@@ -8,9 +8,13 @@
 import Foundation
 
 struct SearchOutput: Codable {
-    var kind = ""
-    var artistName = ""
-    var trackName = ""
-    var previewUrl = ""
-    var artworkUrl100 = ""
+   var results = [Results]()
+}
+
+struct Results: Codable {
+    var kind: String?
+    var artistName: String?
+    var trackName: String?
+    var previewUrl: String?
+    var artworkUrl100: String?
 }

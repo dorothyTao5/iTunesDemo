@@ -12,13 +12,7 @@ import PromiseKit
 class BaseAPIServices {
     private let session: Session = {
         let configuration = URLSessionConfiguration.af.default
-//        configuration.timeoutIntervalForRequest = 90
-//        configuration.timeoutIntervalForResource = 86400
         return Alamofire.Session(configuration: configuration)
-    }()
-    private let requestInterceptor: APIRequestInterceptor = {
-        let interceptor = APIRequestInterceptor()
-        return interceptor
     }()
     /// Base Http Request Generator
     ///
@@ -58,6 +52,7 @@ class BaseAPIServices {
         }
     }
 }
+
 func jsonString(data: Data) -> String {
     return String(data: data, encoding: .utf8)?.replacingOccurrences(of: "\\", with: "") ?? "nil"
 }
