@@ -22,6 +22,15 @@
 		E159E38827BE5152008F71CD /* BaseNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E159E38627BE5152008F71CD /* BaseNavigationViewController.swift */; };
 		E159E38927BE5152008F71CD /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E159E38727BE5152008F71CD /* BaseViewController.swift */; };
 		E159E38C27BE541D008F71CD /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E159E38B27BE541D008F71CD /* R.generated.swift */; };
+		E1F55B5D27FADE7B00EC8D82 /* CAGradientLayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B5C27FADE7B00EC8D82 /* CAGradientLayer+Extension.swift */; };
+		E1F55B6027FAE11C00EC8D82 /* CAGradientLayer+Entension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B5F27FAE11C00EC8D82 /* CAGradientLayer+Entension.swift */; };
+		E1F55B6327FAE64400EC8D82 /* SearchingTBVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B6227FAE64400EC8D82 /* SearchingTBVCell.swift */; };
+		E1F55B6527FAE7CB00EC8D82 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B6427FAE7CB00EC8D82 /* UITableView+Extension.swift */; };
+		E1F55B6727FAE8B000EC8D82 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B6627FAE8B000EC8D82 /* Int+Extension.swift */; };
+		E1F55B6A27FB098200EC8D82 /* CustomTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B6927FB098200EC8D82 /* CustomTextFieldView.swift */; };
+		E1F55B6C27FB0B5F00EC8D82 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B6B27FB0B5F00EC8D82 /* UITextField+Extension.swift */; };
+		E1F55B6E27FB182800EC8D82 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B6D27FB182800EC8D82 /* UIImage+Extension.swift */; };
+		E1F55B7027FB1A3A00EC8D82 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F55B6F27FB1A3A00EC8D82 /* UILabel+Extension.swift */; };
 		F3D7010CEE47A56684ABA106 /* Pods_iTunesDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A55D58DEAF31FEAA770623 /* Pods_iTunesDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +53,15 @@
 		E159E38627BE5152008F71CD /* BaseNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationViewController.swift; sourceTree = "<group>"; };
 		E159E38727BE5152008F71CD /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E159E38B27BE541D008F71CD /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		E1F55B5C27FADE7B00EC8D82 /* CAGradientLayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Extension.swift"; sourceTree = "<group>"; };
+		E1F55B5F27FAE11C00EC8D82 /* CAGradientLayer+Entension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Entension.swift"; sourceTree = "<group>"; };
+		E1F55B6227FAE64400EC8D82 /* SearchingTBVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingTBVCell.swift; sourceTree = "<group>"; };
+		E1F55B6427FAE7CB00EC8D82 /* UITableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		E1F55B6627FAE8B000EC8D82 /* Int+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		E1F55B6927FB098200EC8D82 /* CustomTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldView.swift; sourceTree = "<group>"; };
+		E1F55B6B27FB0B5F00EC8D82 /* UITextField+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		E1F55B6D27FB182800EC8D82 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		E1F55B6F27FB1A3A00EC8D82 /* UILabel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		E3A55D58DEAF31FEAA770623 /* Pods_iTunesDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iTunesDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDD9857996060E504134526 /* Pods-iTunesDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTunesDemo.debug.xcconfig"; path = "Target Support Files/Pods-iTunesDemo/Pods-iTunesDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +124,9 @@
 				E151DC0627BE490D00B4F8E0 /* Info.plist */,
 				E159E38A27BE5158008F71CD /* BaseViewController */,
 				E151DC0C27BE493500B4F8E0 /* API */,
+				E1F55B6827FB094600EC8D82 /* Component */,
+				E1F55B5E27FAE10200EC8D82 /* Extensions */,
+				E1F55B5B27FADDD300EC8D82 /* DataType */,
 				E159E38227BE5026008F71CD /* SearchingViewController */,
 			);
 			path = iTunesDemo;
@@ -145,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				E151DBFC27BE490B00B4F8E0 /* SearchingViewController.swift */,
+				E1F55B6127FAE61300EC8D82 /* Views */,
 			);
 			path = SearchingViewController;
 			sourceTree = "<group>";
@@ -156,6 +178,43 @@
 				E159E38727BE5152008F71CD /* BaseViewController.swift */,
 			);
 			path = BaseViewController;
+			sourceTree = "<group>";
+		};
+		E1F55B5B27FADDD300EC8D82 /* DataType */ = {
+			isa = PBXGroup;
+			children = (
+				E1F55B5C27FADE7B00EC8D82 /* CAGradientLayer+Extension.swift */,
+			);
+			path = DataType;
+			sourceTree = "<group>";
+		};
+		E1F55B5E27FAE10200EC8D82 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E1F55B5F27FAE11C00EC8D82 /* CAGradientLayer+Entension.swift */,
+				E1F55B6427FAE7CB00EC8D82 /* UITableView+Extension.swift */,
+				E1F55B6627FAE8B000EC8D82 /* Int+Extension.swift */,
+				E1F55B6B27FB0B5F00EC8D82 /* UITextField+Extension.swift */,
+				E1F55B6D27FB182800EC8D82 /* UIImage+Extension.swift */,
+				E1F55B6F27FB1A3A00EC8D82 /* UILabel+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E1F55B6127FAE61300EC8D82 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E1F55B6227FAE64400EC8D82 /* SearchingTBVCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E1F55B6827FB094600EC8D82 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				E1F55B6927FB098200EC8D82 /* CustomTextFieldView.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,15 +350,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F55B7027FB1A3A00EC8D82 /* UILabel+Extension.swift in Sources */,
 				E159E38927BE5152008F71CD /* BaseViewController.swift in Sources */,
+				E1F55B6327FAE64400EC8D82 /* SearchingTBVCell.swift in Sources */,
 				E151DC2027BE493500B4F8E0 /* SearchRouter.swift in Sources */,
+				E1F55B6727FAE8B000EC8D82 /* Int+Extension.swift in Sources */,
 				E151DBFD27BE490B00B4F8E0 /* SearchingViewController.swift in Sources */,
+				E1F55B6C27FB0B5F00EC8D82 /* UITextField+Extension.swift in Sources */,
 				E151DC1E27BE493500B4F8E0 /* SearchOutput.swift in Sources */,
 				E159E38827BE5152008F71CD /* BaseNavigationViewController.swift in Sources */,
+				E1F55B6527FAE7CB00EC8D82 /* UITableView+Extension.swift in Sources */,
 				E151DC1927BE493500B4F8E0 /* APIConstants.swift in Sources */,
 				E159E38C27BE541D008F71CD /* R.generated.swift in Sources */,
 				E151DC1B27BE493500B4F8E0 /* APICaller.swift in Sources */,
+				E1F55B6A27FB098200EC8D82 /* CustomTextFieldView.swift in Sources */,
 				E151DC1827BE493500B4F8E0 /* BaseAPIServices.swift in Sources */,
+				E1F55B6027FAE11C00EC8D82 /* CAGradientLayer+Entension.swift in Sources */,
+				E1F55B6E27FB182800EC8D82 /* UIImage+Extension.swift in Sources */,
+				E1F55B5D27FADE7B00EC8D82 /* CAGradientLayer+Extension.swift in Sources */,
 				E151DBF927BE490B00B4F8E0 /* AppDelegate.swift in Sources */,
 				E151DC1C27BE493500B4F8E0 /* SearchAPIServices.swift in Sources */,
 				E151DBFB27BE490B00B4F8E0 /* SceneDelegate.swift in Sources */,

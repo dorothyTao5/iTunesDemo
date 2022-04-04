@@ -28,7 +28,7 @@ enum SearchRouter: APIConfiguration {
     var description: String {
         switch self {
         case .getSearch:
-            return "search🌶️"
+            return " search "
        }
     }
 
