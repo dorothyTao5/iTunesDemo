@@ -33,10 +33,6 @@ class SearchingViewController: BaseViewController {
         setupUI()
         searchViewEventHandler()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("viewWillAppear")
-    }
 }
 //MARK: - Private Extension
 private extension SearchingViewController {
@@ -84,6 +80,7 @@ private extension SearchingViewController {
 //MARK: - UITableViewDataSource
 extension SearchingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.backgroundView = resultsData.isEmpty ? EmptyView(withType: .noResult, onPosition: .upper) : nil
         return resultsData.count
     }
     

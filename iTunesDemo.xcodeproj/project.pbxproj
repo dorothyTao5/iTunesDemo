@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E13FD8D927FC773F00442746 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13FD8D827FC773F00442746 /* EmptyView.swift */; };
 		E151DBF927BE490B00B4F8E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151DBF827BE490B00B4F8E0 /* AppDelegate.swift */; };
 		E151DBFB27BE490B00B4F8E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151DBFA27BE490B00B4F8E0 /* SceneDelegate.swift */; };
 		E151DBFD27BE490B00B4F8E0 /* SearchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151DBFC27BE490B00B4F8E0 /* SearchingViewController.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		903682E574EA1BD9E328F2B6 /* Pods-iTunesDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTunesDemo.release.xcconfig"; path = "Target Support Files/Pods-iTunesDemo/Pods-iTunesDemo.release.xcconfig"; sourceTree = "<group>"; };
+		E13FD8D827FC773F00442746 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		E151DBF527BE490B00B4F8E0 /* iTunesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E151DBF827BE490B00B4F8E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E151DBFA27BE490B00B4F8E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				E1F55B6927FB098200EC8D82 /* CustomTextFieldView.swift */,
+				E13FD8D827FC773F00442746 /* EmptyView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				E159E38927BE5152008F71CD /* BaseViewController.swift in Sources */,
 				E1F55B6327FAE64400EC8D82 /* SearchingTBVCell.swift in Sources */,
 				E151DC2027BE493500B4F8E0 /* SearchRouter.swift in Sources */,
+				E13FD8D927FC773F00442746 /* EmptyView.swift in Sources */,
 				E1F55B6727FAE8B000EC8D82 /* Int+Extension.swift in Sources */,
 				E151DBFD27BE490B00B4F8E0 /* SearchingViewController.swift in Sources */,
 				E1F55B6C27FB0B5F00EC8D82 /* UITextField+Extension.swift in Sources */,
