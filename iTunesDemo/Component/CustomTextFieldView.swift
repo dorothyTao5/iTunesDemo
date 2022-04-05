@@ -17,6 +17,7 @@ class CustomTextFieldView: UIView {
         tf.layer.borderColor = R.color.black_blue()!.cgColor
         tf.layer.cornerRadius = 4
         tf.tintColor = R.color.black_white()!
+        tf.returnKeyType = .done
         tf.delegate = self
         return tf
     }()
@@ -49,12 +50,11 @@ extension CustomTextFieldView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         beginEditing?()
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        endEditingCallback?(textField.text ?? "")
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
     }
-
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         debounceTimer?.invalidate()
         debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
@@ -63,5 +63,4 @@ extension CustomTextFieldView: UITextFieldDelegate {
         }
         return true
     }
-    
 }

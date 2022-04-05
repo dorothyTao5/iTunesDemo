@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import AVFoundation
 
 class SearchingTBVCell: UITableViewCell {
 
@@ -26,6 +27,7 @@ class SearchingTBVCell: UITableViewCell {
         btn.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         btn.setImage(R.image.icon_play()!, for: .normal)
         btn.setImage(R.image.icon_play()!.opacity(0.5), for: .highlighted)
+        btn.addTarget(self, action: #selector(btnPlayPressed), for: .touchUpInside)
         return btn
     }()
     private lazy var separatorLine:UIView = {
@@ -35,6 +37,8 @@ class SearchingTBVCell: UITableViewCell {
     }()
     
     private var gradientLayer = CAGradientLayer()
+    
+    var playPauseCallBack: (() -> Void)?
 //MARK: - Life Cycle
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -96,6 +100,10 @@ private extension SearchingTBVCell {
             make.left.bottom.right.equalToSuperview()
         }
     }
+    
+    @objc func btnPlayPressed() {
+        playPauseCallBack?()
+    }
 }
 //MARK: - Function
 extension SearchingTBVCell {
@@ -106,5 +114,7 @@ extension SearchingTBVCell {
         }
         lbTitle.text  = data.trackName ?? "-"
         lbArtistName.text = data.artistName ?? "-"
+        btnPlay.setImage(data.isPlaying ? R.image.icon_pause()! : R.image.icon_play()!, for: .normal)
+        btnPlay.setImage(data.isPlaying ? R.image.icon_pause()!.opacity(0.5) : R.image.icon_play()!.opacity(0.5), for: .highlighted)
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import IQKeyboardManagerSwift
+import AVFoundation
 
 class SearchingViewController: BaseViewController {
 
@@ -25,11 +26,16 @@ class SearchingViewController: BaseViewController {
     }()
     
     private var resultsData = [Results]()
+    private var player = AVPlayer()
 //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         searchViewEventHandler()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear")
     }
 }
 //MARK: - Private Extension
@@ -56,6 +62,24 @@ private extension SearchingViewController {
             self?.fetchSongs(searchedStr: searchedStr)
         }
     }
+    
+    func playPauseEventHandler(indexPath: IndexPath) {
+        if let isPlayingIndex = resultsData.firstIndex(where: { $0.isPlaying }), isPlayingIndex != indexPath.row {
+            resultsData[isPlayingIndex].isPlaying = false
+            tableView.reloadRows(at: [IndexPath(row: isPlayingIndex, section: 0)], with: .automatic)
+        }
+        resultsData[indexPath.row].isPlaying.toggle()
+        if resultsData[indexPath.row].isPlaying {
+            guard let previewUrl = resultsData[indexPath.row].previewUrl else { return }
+            let url = URL(string: previewUrl)!
+            let playerItem = AVPlayerItem(url: url)
+            player.replaceCurrentItem(with: playerItem)
+            player.play()
+        } else {
+            player.pause()
+        }
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
 }
 //MARK: - UITableViewDataSource
 extension SearchingViewController: UITableViewDataSource {
@@ -67,6 +91,9 @@ extension SearchingViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withClass: SearchingTBVCell.self, for: indexPath)
         let colorIndex = indexPath.row.truncatingRemainder(dividingBy: 6)
         cell.setupCell(data: resultsData[indexPath.row], colorIndex: colorIndex)
+        cell.playPauseCallBack = { [weak self] in
+            self?.playPauseEventHandler(indexPath: indexPath)
+        }
         return cell
     }
 }

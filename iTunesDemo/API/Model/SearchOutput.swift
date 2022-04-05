@@ -17,4 +17,9 @@ struct Results: Codable {
     var trackName: String?
     var previewUrl: String?
     var artworkUrl100: String?
+    var isPlaying = false
+    
+    enum CodingKeys: String, CodingKey {
+        case kind, artistName, trackName, previewUrl, artworkUrl100
+    }
 }
