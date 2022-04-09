@@ -14,13 +14,15 @@ class BaseViewController: UIViewController {
         case right
     }
     
-    lazy var btnBack: UIButton = {
-        let btn = UIButton(frame: CGRect())
-        btn.setImage(R.image.button_back_normal()!, for: .normal)
-        btn.setImage(R.image.button_back_pressed()!, for: .highlighted)
-        return btn
+    private lazy var btnBack:UIBarButtonItem = {
+        let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
+        let btnItem = UIBarButtonItem(customView: btn)
+        btn.setImage(R.image.button_back_normal(), for: .normal)
+        btn.setImage(R.image.button_back_normal()!.opacity(0.5), for: .highlighted)
+        btn.addTarget(self, action: #selector(popViewController), for: .touchUpInside)
+        return btnItem
     }()
-
+//MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -28,18 +30,27 @@ class BaseViewController: UIViewController {
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        modalPresentationStyle = .overFullScreen
-        modalTransitionStyle = .crossDissolve
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
+extension BaseViewController {
+    func addBackButton(at position: Position = .left) {
+        switch position {
+        case .left:
+            navigationItem.setLeftBarButton(btnBack, animated: true)
+        case .right:
+            navigationItem.setRightBarButton(btnBack, animated: true)
+        }
+    }
+}
+//MARK: - @objc Functions
 extension BaseViewController {
     @objc func popViewController() {
-        navigationController?.base?.popViewController(animated: true)
+//        navigationController?.base?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 
     @objc func dismissViewController() {

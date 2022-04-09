@@ -88,6 +88,7 @@ extension SearchingViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withClass: SearchingTBVCell.self, for: indexPath)
         let colorIndex = indexPath.row.truncatingRemainder(dividingBy: 6)
         cell.setupCell(data: resultsData[indexPath.row], colorIndex: colorIndex)
+        cell.setHeroID(id: "\(indexPath.row)")
         cell.playPauseCallBack = { [weak self] in
             self?.playPauseEventHandler(indexPath: indexPath)
         }
@@ -97,6 +98,13 @@ extension SearchingViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension SearchingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? SearchingTBVCell
+        let vc = CurrentSongViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.heroid = "\(indexPath.row)"
+        vc.setupView(heroID: "\(indexPath.row)", data: resultsData[indexPath.row], photo: cell!.ivPhoto.image!)
+        player.pause()
+        present(vc, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

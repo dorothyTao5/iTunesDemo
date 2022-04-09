@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.5.0)
+  - Hero (1.6.1)
   - IQKeyboardManagerSwift (6.5.9)
   - Kingfisher (7.1.2)
   - PromiseKit (6.16.3):
@@ -19,6 +20,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.5)
+  - Hero
   - IQKeyboardManagerSwift (~> 6.5)
   - Kingfisher (~> 7.0)
   - PromiseKit (~> 6.8)
@@ -29,6 +31,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Hero
     - IQKeyboardManagerSwift
     - Kingfisher
     - PromiseKit
@@ -39,6 +42,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
+  Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   IQKeyboardManagerSwift: 6e839c575c4aa1078d58a596e41244e77abe918f
   Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   PromiseKit: ed0e2a8e3f3cd59d5d98ca0a6de481a2c5c59c0b
@@ -47,6 +51,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
 
-PODFILE CHECKSUM: 944e98ee68bf4d3018e379247093dc175a970042
+PODFILE CHECKSUM: a0ca786ff9428aa77f4b737522bb40e8952f62d2
 
 COCOAPODS: 1.11.2

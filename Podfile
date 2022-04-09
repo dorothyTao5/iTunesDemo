@@ -14,4 +14,5 @@ target 'iTunesDemo' do
   pod "PromiseKit", "~> 6.8"
   pod 'Kingfisher', '~> 7.0'
   pod 'IQKeyboardManagerSwift', '~> 6.5'
+  pod 'Hero'
 end

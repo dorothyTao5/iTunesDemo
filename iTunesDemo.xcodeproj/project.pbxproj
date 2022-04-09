@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E13FD8D927FC773F00442746 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13FD8D827FC773F00442746 /* EmptyView.swift */; };
+		E13FD8DC27FC801C00442746 /* CurrentSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13FD8DB27FC801C00442746 /* CurrentSongViewController.swift */; };
+		E13FD8DF27FC81C100442746 /* SongHeroID.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13FD8DE27FC81C100442746 /* SongHeroID.swift */; };
 		E151DBF927BE490B00B4F8E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151DBF827BE490B00B4F8E0 /* AppDelegate.swift */; };
 		E151DBFB27BE490B00B4F8E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151DBFA27BE490B00B4F8E0 /* SceneDelegate.swift */; };
 		E151DBFD27BE490B00B4F8E0 /* SearchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E151DBFC27BE490B00B4F8E0 /* SearchingViewController.swift */; };
@@ -38,6 +40,8 @@
 /* Begin PBXFileReference section */
 		903682E574EA1BD9E328F2B6 /* Pods-iTunesDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTunesDemo.release.xcconfig"; path = "Target Support Files/Pods-iTunesDemo/Pods-iTunesDemo.release.xcconfig"; sourceTree = "<group>"; };
 		E13FD8D827FC773F00442746 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		E13FD8DB27FC801C00442746 /* CurrentSongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSongViewController.swift; sourceTree = "<group>"; };
+		E13FD8DE27FC81C100442746 /* SongHeroID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHeroID.swift; sourceTree = "<group>"; };
 		E151DBF527BE490B00B4F8E0 /* iTunesDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E151DBF827BE490B00B4F8E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E151DBFA27BE490B00B4F8E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +101,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E13FD8DA27FC7FFE00442746 /* CurrentSong */ = {
+			isa = PBXGroup;
+			children = (
+				E13FD8DB27FC801C00442746 /* CurrentSongViewController.swift */,
+			);
+			path = CurrentSong;
+			sourceTree = "<group>";
+		};
+		E13FD8DD27FC819500442746 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E13FD8DE27FC81C100442746 /* SongHeroID.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E151DBEC27BE490B00B4F8E0 = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +150,7 @@
 				E1F55B5E27FAE10200EC8D82 /* Extensions */,
 				E1F55B5B27FADDD300EC8D82 /* DataType */,
 				E159E38227BE5026008F71CD /* SearchingViewController */,
+				E13FD8DA27FC7FFE00442746 /* CurrentSong */,
 			);
 			path = iTunesDemo;
 			sourceTree = "<group>";
@@ -168,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				E151DBFC27BE490B00B4F8E0 /* SearchingViewController.swift */,
+				E13FD8DD27FC819500442746 /* Model */,
 				E1F55B6127FAE61300EC8D82 /* Views */,
 			);
 			path = SearchingViewController;
@@ -364,12 +386,14 @@
 				E151DC1E27BE493500B4F8E0 /* SearchOutput.swift in Sources */,
 				E159E38827BE5152008F71CD /* BaseNavigationViewController.swift in Sources */,
 				E1F55B6527FAE7CB00EC8D82 /* UITableView+Extension.swift in Sources */,
+				E13FD8DC27FC801C00442746 /* CurrentSongViewController.swift in Sources */,
 				E151DC1927BE493500B4F8E0 /* APIConstants.swift in Sources */,
 				E159E38C27BE541D008F71CD /* R.generated.swift in Sources */,
 				E151DC1B27BE493500B4F8E0 /* APICaller.swift in Sources */,
 				E1F55B6A27FB098200EC8D82 /* CustomTextFieldView.swift in Sources */,
 				E151DC1827BE493500B4F8E0 /* BaseAPIServices.swift in Sources */,
 				E1F55B6027FAE11C00EC8D82 /* CAGradientLayer+Entension.swift in Sources */,
+				E13FD8DF27FC81C100442746 /* SongHeroID.swift in Sources */,
 				E1F55B6E27FB182800EC8D82 /* UIImage+Extension.swift in Sources */,
 				E1F55B5D27FADE7B00EC8D82 /* CAGradientLayer+Extension.swift in Sources */,
 				E151DBF927BE490B00B4F8E0 /* AppDelegate.swift in Sources */,

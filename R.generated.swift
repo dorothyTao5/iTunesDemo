@@ -301,7 +301,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 7 images.
+  /// This `R.image` struct is generated, and contains static references to 8 images.
   struct image {
     /// Image `button_back_normal`.
     static let button_back_normal = Rswift.ImageResource(bundle: R.hostingBundle, name: "button_back_normal")
@@ -309,6 +309,8 @@ struct R: Rswift.Validatable {
     static let button_back_pressed = Rswift.ImageResource(bundle: R.hostingBundle, name: "button_back_pressed")
     /// Image `empty_photo`.
     static let empty_photo = Rswift.ImageResource(bundle: R.hostingBundle, name: "empty_photo")
+    /// Image `icon_doubleDown`.
+    static let icon_doubleDown = Rswift.ImageResource(bundle: R.hostingBundle, name: "icon_doubleDown")
     /// Image `icon_pause`.
     static let icon_pause = Rswift.ImageResource(bundle: R.hostingBundle, name: "icon_pause")
     /// Image `icon_play`.
@@ -336,6 +338,13 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "empty_photo", bundle: ..., traitCollection: ...)`
     static func empty_photo(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.empty_photo, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "icon_doubleDown", bundle: ..., traitCollection: ...)`
+    static func icon_doubleDown(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.icon_doubleDown, compatibleWith: traitCollection)
     }
     #endif
 

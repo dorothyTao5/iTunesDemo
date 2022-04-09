@@ -34,6 +34,11 @@ class CustomTextFieldView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        textFeild.layer.borderColor = R.color.black_blue()!.cgColor
+        textFeild.tintColor = R.color.black_white()!
+    }
 }
 //MARK: - Private Extension
 private extension CustomTextFieldView {
