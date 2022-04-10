@@ -21,16 +21,19 @@ class SearchingViewController: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.backgroundView = EmptyView(withType: .noResult, onPosition: .upper)
-        tableView.delegate = self
+        
         return tableView
     }()
     
     private let dataSource = SearchingDataSource()
+    private var delegate: SearchingDelegate?
     private var player = AVPlayer()
 //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = dataSource
+        delegate = SearchingDelegate(withDelegate: self)
+        tableView.delegate = delegate
         setupUI()
         searchViewEventHandler()
         dataSourceEventHandler()
@@ -70,15 +73,15 @@ private extension SearchingViewController {
             self.tableView.reloadRows(at: [indexes.current], with: .automatic)
 
             let currentSong = self.dataSource.searchOutput.results[indexes.current.row]
-            if currentSong.isPlaying {
-                guard let previewUrl = currentSong.previewUrl else { return }
-                let url = URL(string: previewUrl)!
-                let playerItem = AVPlayerItem(url: url)
-                self.player.replaceCurrentItem(with: playerItem)
-                self.player.play()
-            } else {
-                self.player.pause()
-            }
+            guard let previewUrl = currentSong.previewUrl,
+                      currentSong.isPlaying else {
+                          self.player.pause()
+                          return
+                      }
+            let url = URL(string: previewUrl)!
+            let playerItem = AVPlayerItem(url: url)
+            self.player.replaceCurrentItem(with: playerItem)
+            self.player.play()
         }
         
         dataSource.didUpdateDataCallback = { [weak self] in
@@ -88,32 +91,14 @@ private extension SearchingViewController {
         }
     }
 }
-
-//MARK: - UITableViewDelegate
-extension SearchingViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+extension SearchingViewController: SearchingVCDelegate {
+    func selectedCell(indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? SearchingTBVCell
         let vc = CurrentSongViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.heroid = "\(indexPath.row)"
         vc.setupView(heroID: "\(indexPath.row)", data: dataSource.searchOutput.results[indexPath.row], photo: cell!.ivPhoto.image!)
-//        player.pause()
+        //        player.pause()
         present(vc, animated: true, completion: nil)
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.leastNonzeroMagnitude
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return nil
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.leastNonzeroMagnitude
     }
 }
