@@ -20,7 +20,7 @@ class SearchingViewController: BaseViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.contentInsetAdjustmentBehavior = .never
-        self.tableView.backgroundView = EmptyView(withType: .noResult, onPosition: .upper)
+        tableView.backgroundView = EmptyView(withType: .noResult, onPosition: .upper)
         tableView.delegate = self
         return tableView
     }()
@@ -62,15 +62,16 @@ private extension SearchingViewController {
     }
     
     func dataSourceEventHandler() {
-        dataSource.playPauseCallback = { [weak self] indexPath in
+        dataSource.playPauseCallback = { [weak self] indexes in
             guard let self = self else { return }
-            if let isPlayingIndex = self.dataSource.resultsData.firstIndex(where: { $0.isPlaying }), isPlayingIndex != indexPath.row {
-                self.dataSource.resultsData[isPlayingIndex].isPlaying = false
-                self.tableView.reloadRows(at: [IndexPath(row: isPlayingIndex, section: 0)], with: .automatic)
+            if let previousIndex = indexes.previous {
+                self.tableView.reloadRows(at: [previousIndex], with: .automatic)
             }
-            self.dataSource.resultsData[indexPath.row].isPlaying.toggle()
-            if self.dataSource.resultsData[indexPath.row].isPlaying {
-                guard let previewUrl = self.dataSource.resultsData[indexPath.row].previewUrl else { return }
+            self.tableView.reloadRows(at: [indexes.current], with: .automatic)
+
+            let currentSong = self.dataSource.searchOutput.results[indexes.current.row]
+            if currentSong.isPlaying {
+                guard let previewUrl = currentSong.previewUrl else { return }
                 let url = URL(string: previewUrl)!
                 let playerItem = AVPlayerItem(url: url)
                 self.player.replaceCurrentItem(with: playerItem)
@@ -78,12 +79,11 @@ private extension SearchingViewController {
             } else {
                 self.player.pause()
             }
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
         dataSource.didUpdateDataCallback = { [weak self] in
             guard let self = self else { return }
-            self.tableView.backgroundView = self.dataSource.resultsData.isEmpty ? EmptyView(withType: .noResult, onPosition: .upper) : nil
+            self.tableView.backgroundView = self.dataSource.searchOutput.results.isEmpty ? EmptyView(withType: .noResult, onPosition: .upper) : nil
             self.tableView.reloadData()
         }
     }
@@ -96,7 +96,7 @@ extension SearchingViewController: UITableViewDelegate {
         let vc = CurrentSongViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.heroid = "\(indexPath.row)"
-        vc.setupView(heroID: "\(indexPath.row)", data: dataSource.resultsData[indexPath.row], photo: cell!.ivPhoto.image!)
+        vc.setupView(heroID: "\(indexPath.row)", data: dataSource.searchOutput.results[indexPath.row], photo: cell!.ivPhoto.image!)
 //        player.pause()
         present(vc, animated: true, completion: nil)
     }
