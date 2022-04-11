@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import IQKeyboardManagerSwift
 import AVFoundation
+import RxSwift
 
 class SearchingViewController: BaseViewController {
 
@@ -26,17 +27,20 @@ class SearchingViewController: BaseViewController {
     }()
     
     private let dataSource = SearchingDataSource()
-    private var delegate: SearchingDelegate?
+    private var delegate = SearchingDataSource()
     private var player = AVPlayer()
+    
+    private var viewModel = SearchingViewModel()
+    private let disposeBag = DisposeBag()
 //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = dataSource
-        delegate = SearchingDelegate(withDelegate: self)
-        tableView.delegate = delegate
+        tableView.delegate = dataSource
         setupUI()
         searchViewEventHandler()
         dataSourceEventHandler()
+        setupBindings()
     }
 }
 //MARK: - Private Extension
@@ -58,9 +62,31 @@ private extension SearchingViewController {
         }
     }
     
+    func setupBindings() {
+        viewModel
+            .error
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { (error) in
+                log.error(error)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .searchOutput
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] data in
+                guard let self = self else { return }
+                self.tableView.backgroundView = data.results.isEmpty ? EmptyView(withType: .noResult, onPosition: .center) : nil
+                self.dataSource.searchOutput = data
+                self.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func searchViewEventHandler() {
         searchView.endEditingCallback = { [weak self] searchedStr in
-            self?.dataSource.fetchSongs(searchedStr: searchedStr)
+            guard let self = self else { return }
+            self.viewModel.fetchSongs(searchedStr: searchedStr)
         }
     }
     
@@ -84,21 +110,8 @@ private extension SearchingViewController {
             self.player.play()
         }
         
-        dataSource.didUpdateDataCallback = { [weak self] in
-            guard let self = self else { return }
-            self.tableView.backgroundView = self.dataSource.searchOutput.results.isEmpty ? EmptyView(withType: .noResult, onPosition: .upper) : nil
-            self.tableView.reloadData()
+        dataSource.presentVCCallback = { vc in
+            self.present(vc, animated: true, completion: nil)
         }
-    }
-}
-extension SearchingViewController: SearchingVCDelegate {
-    func selectedCell(indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? SearchingTBVCell
-        let vc = CurrentSongViewController()
-        vc.modalPresentationStyle = .fullScreen
-        vc.heroid = "\(indexPath.row)"
-        vc.setupView(heroID: "\(indexPath.row)", data: dataSource.searchOutput.results[indexPath.row], photo: cell!.ivPhoto.image!)
-        //        player.pause()
-        present(vc, animated: true, completion: nil)
     }
 }

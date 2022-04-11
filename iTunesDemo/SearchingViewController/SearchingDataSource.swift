@@ -6,17 +6,18 @@
 //
 
 import UIKit
+import RxSwift
 
 class SearchingDataSource: NSObject, UITableViewDataSource {
     var searchOutput = SearchOutput()
     
     var playPauseCallback: ((MusicIndexes) -> Void)?
-    var didUpdateDataCallback: (() -> Void)?
+    var presentVCCallback: ((UIViewController) -> Void)?
 //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchOutput.results.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withClass: SearchingTBVCell.self, for: indexPath)
         let colorIndex = indexPath.row.truncatingRemainder(dividingBy: 6)
@@ -30,15 +31,31 @@ class SearchingDataSource: NSObject, UITableViewDataSource {
         return cell
     }
 }
-//MARK: - API
-extension SearchingDataSource {
-    func fetchSongs(searchedStr str:String) {
-        SearchAPIServices.sharedInstance.getSearch(input: SearchInput(term: str)).done { [weak self] data in
-            guard let self = self else { return }
-            self.searchOutput = data
-            self.didUpdateDataCallback?()
-        }.catch { error in
-            log.error(error)
-        }
+//MARK: - UITableViewDelegate
+extension SearchingDataSource: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
+        let cell = tableView.cellForRow(at: indexPath) as? SearchingTBVCell
+        let vc = CurrentSongViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.heroid = "\(indexPath.row)"
+        vc.setupView(heroID: "\(indexPath.row)", data: searchOutput.results[indexPath.row], photo: cell!.ivPhoto.image!)
+        //        player.pause()
+        presentVCCallback?(vc)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNonzeroMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNonzeroMagnitude
     }
 }

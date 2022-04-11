@@ -13,21 +13,18 @@ protocol SearchingVCDelegate: AnyObject {
 
 class SearchingDelegate: NSObject, UITableViewDelegate {
     
+    private var viewModel = SearchingViewModel()
+    
     weak var delegate: SearchingVCDelegate?
     
-    init(withDelegate delegate: SearchingVCDelegate) {
+    init(withDelegate delegate: SearchingVCDelegate, viewModel: SearchingViewModel) {
         self.delegate = delegate
+        self.viewModel = viewModel
     }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.selectedCell(indexPath: indexPath)
-//        let cell = tableView.cellForRow(at: indexPath) as? SearchingTBVCell
-//        let vc = CurrentSongViewController()
-//        vc.modalPresentationStyle = .fullScreen
-//        vc.heroid = "\(indexPath.row)"
-//        vc.setupView(heroID: "\(indexPath.row)", data: searchOutput.results[indexPath.row], photo: cell!.ivPhoto.image!)
-//        //        player.pause()
-//        present(vc, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
