@@ -15,4 +15,6 @@ target 'iTunesDemo' do
   pod 'Kingfisher', '~> 7.0'
   pod 'IQKeyboardManagerSwift', '~> 6.5'
   pod 'Hero'
+  pod 'RxSwift', '6.5.0'
+  pod 'RxCocoa', '6.5.0'
 end
