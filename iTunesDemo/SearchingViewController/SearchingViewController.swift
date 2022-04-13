@@ -22,16 +22,13 @@ class SearchingViewController: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.backgroundView = EmptyView(withType: .noResult, onPosition: .upper)
-        
         return tableView
     }()
     
     private let dataSource = SearchingDataSource()
     private var delegate = SearchingDataSource()
-    private var player = AVPlayer()
     
     private var viewModel = SearchingViewModel()
-    private let disposeBag = DisposeBag()
 //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,8 +65,7 @@ private extension SearchingViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { (error) in
                 log.error(error)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         
         viewModel
             .searchOutput
@@ -79,8 +75,7 @@ private extension SearchingViewController {
                 self.tableView.backgroundView = data.results.isEmpty ? EmptyView(withType: .noResult, onPosition: .center) : nil
                 self.dataSource.searchOutput = data
                 self.tableView.reloadData()
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     func searchViewEventHandler() {
@@ -97,17 +92,8 @@ private extension SearchingViewController {
                 self.tableView.reloadRows(at: [previousIndex], with: .automatic)
             }
             self.tableView.reloadRows(at: [indexes.current], with: .automatic)
-
             let currentSong = self.dataSource.searchOutput.results[indexes.current.row]
-            guard let previewUrl = currentSong.previewUrl,
-                      currentSong.isPlaying else {
-                          self.player.pause()
-                          return
-                      }
-            let url = URL(string: previewUrl)!
-            let playerItem = AVPlayerItem(url: url)
-            self.player.replaceCurrentItem(with: playerItem)
-            self.player.play()
+            PlayerManager.shared.playMusic(currentSong: currentSong)
         }
         
         dataSource.presentVCCallback = { vc in

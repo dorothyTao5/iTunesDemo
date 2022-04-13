@@ -9,8 +9,9 @@ import UIKit
 import RxSwift
 
 class SearchingDataSource: NSObject, UITableViewDataSource {
-    var searchOutput = SearchOutput()
     
+    var searchOutput = SearchOutput()
+    var focusedSongIndex = MusicIndexes()
     var playPauseCallback: ((MusicIndexes) -> Void)?
     var presentVCCallback: ((UIViewController) -> Void)?
 //MARK: - UITableViewDataSource
@@ -25,8 +26,8 @@ class SearchingDataSource: NSObject, UITableViewDataSource {
         cell.setHeroID(id: "\(indexPath.row)")
         cell.playPauseCallBack = { [weak self] in
             guard let self = self else { return }
-            let indexes = self.searchOutput.updateSelectedData(at: indexPath)
-            self.playPauseCallback?(indexes)
+            self.focusedSongIndex = self.searchOutput.updateSelectedData(at: indexPath)
+            self.playPauseCallback?(self.focusedSongIndex)
         }
         return cell
     }
@@ -35,11 +36,12 @@ class SearchingDataSource: NSObject, UITableViewDataSource {
 extension SearchingDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         let cell = tableView.cellForRow(at: indexPath) as? SearchingTBVCell
+        focusedSongIndex.current = indexPath
         let vc = CurrentSongViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.heroid = "\(indexPath.row)"
         vc.setupView(heroID: "\(indexPath.row)", data: searchOutput.results[indexPath.row], photo: cell!.ivPhoto.image!)
-        //        player.pause()
+        vc.delegate = self
         presentVCCallback?(vc)
     }
     
@@ -57,5 +59,15 @@ extension SearchingDataSource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNonzeroMagnitude
+    }
+}
+//MARK: - CurrentSongVCDelegate
+extension SearchingDataSource: CurrentSongVCDelegate {
+    func updatePlayingData() {
+        self.focusedSongIndex = self.searchOutput.updateSelectedData(at: focusedSongIndex.current)
+    }
+    
+    func updateSearchingVCTBV() {
+        self.playPauseCallback?(self.focusedSongIndex)
     }
 }

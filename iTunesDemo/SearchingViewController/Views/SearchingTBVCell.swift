@@ -9,6 +9,8 @@ import UIKit
 import Kingfisher
 import AVFoundation
 import Hero
+import RxSwift
+import RxCocoa
 
 class SearchingTBVCell: UITableViewCell {
 
@@ -28,7 +30,6 @@ class SearchingTBVCell: UITableViewCell {
         btn.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         btn.setImage(R.image.icon_play()!, for: .normal)
         btn.setImage(R.image.icon_play()!.opacity(0.5), for: .highlighted)
-        btn.addTarget(self, action: #selector(btnPlayPressed), for: .touchUpInside)
         return btn
     }()
     private lazy var separatorLine:UIView = {
@@ -40,6 +41,7 @@ class SearchingTBVCell: UITableViewCell {
     private var gradientLayer = CAGradientLayer()
     private var colorIndex = 0
     var playPauseCallBack: (() -> Void)?
+    private let disposeBag = DisposeBag()
 //MARK: - Life Cycle
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -55,6 +57,7 @@ class SearchingTBVCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        eventHandler()
     }
     
     required init?(coder: NSCoder) {
@@ -108,8 +111,10 @@ private extension SearchingTBVCell {
         }
     }
     
-    @objc func btnPlayPressed() {
-        playPauseCallBack?()
+    func eventHandler() {
+        btnPlay.rx.tap.subscribe(onNext: { [weak self] in
+            self?.playPauseCallBack?()
+        }).disposed(by: disposeBag)
     }
 }
 //MARK: - Function

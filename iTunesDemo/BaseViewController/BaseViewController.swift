@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class BaseViewController: UIViewController {
 
@@ -22,6 +23,8 @@ class BaseViewController: UIViewController {
         btn.addTarget(self, action: #selector(popViewController), for: .touchUpInside)
         return btnItem
     }()
+    
+    let disposeBag = DisposeBag()
 //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
