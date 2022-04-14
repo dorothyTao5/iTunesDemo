@@ -93,7 +93,19 @@ private extension SearchingViewController {
             }
             self.tableView.reloadRows(at: [indexes.current], with: .automatic)
             let currentSong = self.dataSource.searchOutput.results[indexes.current.row]
-            PlayerManager.shared.playMusic(currentSong: currentSong)
+            if currentSong.isPlaying {
+                PlayerManager.shared.playMusic(currentSong: currentSong)
+            } else {
+                PlayerManager.shared.stopPlayer()
+            }
+        }
+        
+        dataSource.updateTbvCallback = { [weak self] indexes in
+            guard let self = self else { return }
+            if let previousIndex = indexes.previous {
+                self.tableView.reloadRows(at: [previousIndex], with: .automatic)
+            }
+            self.tableView.reloadRows(at: [indexes.current], with: .automatic)
         }
         
         dataSource.presentVCCallback = { vc in

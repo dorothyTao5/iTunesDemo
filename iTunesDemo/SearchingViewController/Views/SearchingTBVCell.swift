@@ -127,13 +127,11 @@ extension SearchingTBVCell {
         }
         lbTitle.text  = data.trackName ?? "-"
         lbArtistName.text = data.artistName ?? "-"
-        btnPlay.setImage(data.isPlaying ? R.image.icon_pause()! : R.image.icon_play()!, for: .normal)
-        btnPlay.setImage(data.isPlaying ? R.image.icon_pause()!.opacity(0.5) : R.image.icon_play()!.opacity(0.5), for: .highlighted)
+        btnPlay.setImage(data.isPlaying ? R.image.icon_stop()! : R.image.icon_play()!, for: .normal)
+        btnPlay.setImage(data.isPlaying ? R.image.icon_stop()!.opacity(0.5) : R.image.icon_play()!.opacity(0.5), for: .highlighted)
     }
     
     func setHeroID(id: String) {
         ivPhoto.heroID = SongHeroID.ivPhoto.rawValue + id
-//        lbTitle.heroID = SongHeroID.lbTitle.rawValue + id
-//        lbArtistName.heroID = SongHeroID.lbArtistName.rawValue + id
     }
 }

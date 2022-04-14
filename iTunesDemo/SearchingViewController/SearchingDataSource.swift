@@ -14,6 +14,7 @@ class SearchingDataSource: NSObject, UITableViewDataSource {
     var focusedSongIndex = MusicIndexes()
     var playPauseCallback: ((MusicIndexes) -> Void)?
     var presentVCCallback: ((UIViewController) -> Void)?
+    var updateTbvCallback: ((MusicIndexes) -> Void)?
 //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchOutput.results.count
@@ -68,6 +69,6 @@ extension SearchingDataSource: CurrentSongVCDelegate {
     }
     
     func updateSearchingVCTBV() {
-        self.playPauseCallback?(self.focusedSongIndex)
+        self.updateTbvCallback?(self.focusedSongIndex)
     }
 }
