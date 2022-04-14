@@ -50,15 +50,18 @@ class CurrentSongViewController: BaseViewController {
     }()
     private lazy var slider: UISlider = {
         let slider = UISlider()
-//        slider.
+        slider.isContinuous = false
+        slider.tintColor = R.color.black_blue()!
+        slider.addTarget(self, action: #selector(offsetDraggingDidEnd(_:)), for: .valueChanged)
         return slider
     }()
-
+    private lazy var lbMinTime = UILabel(text: "00:00", color: R.color.black_white()!.withAlphaComponent(0.5), fontSize: 12, weight: .regular)
+    private lazy var lbMaxTime = UILabel(text: "-00:00", color: R.color.black_white()!.withAlphaComponent(0.5), fontSize: 12, weight: .regular)
+    
     var heroid = "0"
     weak var delegate: CurrentSongVCDelegate?
     private var resultData = Results()
-//    let manager = PlayerManager.shared
-//MARK: - Life Cycle
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -66,6 +69,9 @@ class CurrentSongViewController: BaseViewController {
         eventHandler()
         PlayerManager.shared.setupRemoteTransportControls()
         PlayerManager.shared.delegate = self
+        if !btnPlay.isSelected {
+            PlayerManager.shared.playMusic(currentSong: self.resultData)
+        }
     }
 }
 //MARK: - Private Functions
@@ -75,9 +81,13 @@ private extension CurrentSongViewController {
         view.addSubview(backButton)
         view.addSubview(ivPhoto)
         view.addSubview(lbTitle)
-        view.addSubview(btnPlay)
         view.addSubview(lbArtistName)
         view.addSubview(playerBg)
+        playerBg.addSubview(btnPlay)
+        playerBg.addSubview(slider)
+        playerBg.addSubview(lbMinTime)
+        playerBg.addSubview(lbMaxTime)
+        
         
         backButton.snp.makeConstraints { make in
             make.size.equalTo(50)
@@ -89,14 +99,7 @@ private extension CurrentSongViewController {
             make.centerX.equalToSuperview()
         }
         lbTitle.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(80)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalTo(btnPlay.snp.right).offset(8)
-            make.top.equalTo(ivPhoto.snp.bottom).offset(40)
-        }
-        btnPlay.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(20)
-            make.size.equalTo(50)
+            make.left.right.equalToSuperview().inset(20)
             make.top.equalTo(ivPhoto.snp.bottom).offset(40)
         }
         lbArtistName.snp.makeConstraints { make in
@@ -107,6 +110,24 @@ private extension CurrentSongViewController {
             make.top.equalTo(lbArtistName.snp.bottom).offset(20)
             make.left.right.equalToSuperview().inset(20)
             make.height.equalTo(150)
+        }
+        btnPlay.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.top.equalToSuperview().inset(25)
+            make.centerX.equalToSuperview()
+        }
+        slider.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.right.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(35)
+        }
+        lbMinTime.snp.makeConstraints { make in
+            make.left.equalTo(slider)
+            make.top.equalTo(slider.snp.bottom).offset(5)
+        }
+        lbMaxTime.snp.makeConstraints { make in
+            make.right.equalTo(slider)
+            make.top.equalTo(slider.snp.bottom).offset(5)
         }
     }
     
@@ -119,9 +140,16 @@ private extension CurrentSongViewController {
         lbArtistName.heroModifiers = [.duration(1)]
     }
     
-    func setBtnPlayImage(isPlaying: Bool) {
+    func isPlaying(_ isPlaying: Bool) {
+        self.slider.isEnabled = isPlaying
         self.btnPlay.setImage(isPlaying ? R.image.icon_stop()! : R.image.icon_play()!, for: .normal)
         self.btnPlay.isSelected = isPlaying
+        if !btnPlay.isSelected {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.slider.value = 0
+                self.lbMinTime.text = "00:00"
+            }
+        }
     }
     
     func eventHandler() {
@@ -139,12 +167,12 @@ private extension CurrentSongViewController {
             self.delegate?.updateSearchingVCTBV()
             self.dismissViewController()
         }).disposed(by: disposeBag)
-        
-        slider.rx.value.asObservable()
-            .subscribe { value in
-                print("**&** slider value = ",value)
-            }.disposed(by: disposeBag)
-
+    }
+    
+    @objc func offsetDraggingDidEnd(_ sender: UISlider) {
+        if !sender.isTracking {
+            PlayerManager.shared.seekTo(Double(sender.value))
+        }
     }
 }
 //MARK: - Function
@@ -154,15 +182,23 @@ extension CurrentSongViewController {
         self.resultData = data
         self.lbTitle.text = data.trackName ?? "No Title"
         self.lbArtistName.text = data.artistName ?? "-"
-        self.setBtnPlayImage(isPlaying: data.isPlaying)
+        self.isPlaying(data.isPlaying)
     }
 }
 //MARK: - PaulPlayerDelegate
 extension CurrentSongViewController: PaulPlayerDelegate {
     func didUpdatePosition(_ player: AVPlayer?, _ position: PlayerPosition) {
-        print("**&** percentage for slider= ",Float(position.current)/Float(position.duration))
-        print("**&** min = ",String(format: "%02d:%02d", position.current/60, position.current%60))
-        print("**&** max = ",String(format: "%02d:%02d", position.duration/60, position.duration%60))
+        if !slider.isTracking {
+            let min = String(format: "%02d:%02d", position.current/60, position.current%60)
+            let max = String(format: "%02d:%02d", position.duration/60, position.duration%60)
+            self.slider.setValue(Float(position.current)/Float(position.duration), animated: true)
+            lbMinTime.text = min
+            lbMaxTime.text = max
+        } else {
+            let totalMin = Float( position.duration) * slider.value
+            let min = String(format: "%02d:%02d", Int(totalMin)/60, Int(totalMin)%60)
+            lbMinTime.text = min
+        }
     }
     
     func didReceiveNotification(player: AVPlayer?, notification: Notification.Name) {
@@ -172,7 +208,7 @@ extension CurrentSongViewController: PaulPlayerDelegate {
         case .PlayerReadyToPlayNotification:
             break
         case .PlayerDidToPlayNotification:
-            self.setBtnPlayImage(isPlaying: true)
+            self.isPlaying(true)
             self.resultData.isPlaying = true
         case .PlayerFailedNotification:
             let alert = UIAlertController(title: "警告⚠️", message: "無法播放", preferredStyle: .alert)
@@ -180,7 +216,7 @@ extension CurrentSongViewController: PaulPlayerDelegate {
             alert.addAction(action)
             self.present(alert, animated: true, completion: nil)
         case .PauseNotification:
-            self.setBtnPlayImage(isPlaying: false)
+            self.isPlaying(false)
             self.resultData.isPlaying = false
         case .PlayerPlayFinishNotification:
             PlayerManager.shared.stopPlayer()

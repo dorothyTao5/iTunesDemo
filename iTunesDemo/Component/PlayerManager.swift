@@ -27,6 +27,7 @@ class PlayerManager: NSObject {
     weak var delegate: PaulPlayerDelegate?
     var current = 0
     var maxCount = 0
+    private(set) var isSeekInProgress = false
     
 //MARK: - observeValue
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -92,12 +93,16 @@ extension PlayerManager {
     }
     
     func seekTo(_ progress:Double) {
+        self.isSeekInProgress = true
         if let currentItem = self.player.currentItem, currentItem.seekableTimeRanges.count > 0 {
             guard let range = self.player.currentItem?.seekableTimeRanges.first?.timeRangeValue else { return }
             let position = CMTimeGetSeconds(range.start) + (CMTimeGetSeconds(range.duration) * progress)
             let pos = CMTimeMakeWithSeconds(position, preferredTimescale: range.duration.timescale)
             
             self.player.seek(to: pos, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero, completionHandler: { (isFinished:Bool) in
+                
+                self.delegate?.didUpdatePosition(self.player, self.position)
+                self.isSeekInProgress = false
             })
         }
     }
@@ -117,6 +122,15 @@ extension PlayerManager {
         commandCenter.pauseCommand.addTarget { [unowned self] event in
             guard self.player.rate == 1.0 else { return .commandFailed }
             self.player.pause()
+            return .success
+        }
+        
+        commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
+            if let event = event as? MPChangePlaybackPositionCommandEvent{
+                let percent = Float(event.positionTime)/Float(self.position.duration)
+                print("change playback",percent)
+                seekTo(Double(percent))
+            }
             return .success
         }
     }
@@ -169,7 +183,9 @@ private extension PlayerManager {
                 }
                 let currentTime = currentItem.currentTime()
                 self.position = PlayerPosition(duration: Int(duration), current: Int(CMTimeGetSeconds(currentTime)))
-                self.delegate?.didUpdatePosition(self.player, self.position)
+                if !self.isSeekInProgress {
+                    self.delegate?.didUpdatePosition(self.player, self.position)
+                }
             }
         })
     }
