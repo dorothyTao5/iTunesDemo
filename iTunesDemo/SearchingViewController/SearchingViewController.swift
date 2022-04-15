@@ -100,12 +100,8 @@ private extension SearchingViewController {
             }
         }
         
-        dataSource.updateTbvCallback = { [weak self] indexes in
-            guard let self = self else { return }
-            if let previousIndex = indexes.previous {
-                self.tableView.reloadRows(at: [previousIndex], with: .automatic)
-            }
-            self.tableView.reloadRows(at: [indexes.current], with: .automatic)
+        dataSource.updateTbvCallback = { [weak self] in
+            self?.tableView.reloadData()
         }
         
         dataSource.presentVCCallback = { vc in

@@ -14,7 +14,7 @@ class SearchingDataSource: NSObject, UITableViewDataSource {
     var focusedSongIndex = MusicIndexes()
     var playPauseCallback: ((MusicIndexes) -> Void)?
     var presentVCCallback: ((UIViewController) -> Void)?
-    var updateTbvCallback: ((MusicIndexes) -> Void)?
+    var updateTbvCallback: (() -> Void)?
 //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchOutput.results.count
@@ -41,7 +41,7 @@ extension SearchingDataSource: UITableViewDelegate {
         let vc = CurrentSongViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.heroid = "\(indexPath.row)"
-        vc.setupView(heroID: "\(indexPath.row)", data: searchOutput.results[indexPath.row], photo: cell!.ivPhoto.image!)
+        vc.setupView(heroID: "\(indexPath.row)", data: searchOutput.results, indexPath: indexPath, photo: cell!.ivPhoto.image!)
         vc.delegate = self
         presentVCCallback?(vc)
     }
@@ -68,7 +68,11 @@ extension SearchingDataSource: CurrentSongVCDelegate {
         self.focusedSongIndex = self.searchOutput.updateSelectedData(at: focusedSongIndex.current)
     }
     
-    func updateSearchingVCTBV() {
-        self.updateTbvCallback?(self.focusedSongIndex)
+    func updateSearchingVCTBV(currentIndex: Int) {
+        for i in 0..<searchOutput.results.count {
+            searchOutput.results[i].isPlaying = false
+        }
+        searchOutput.results[currentIndex].isPlaying = true
+        self.updateTbvCallback?()
     }
 }

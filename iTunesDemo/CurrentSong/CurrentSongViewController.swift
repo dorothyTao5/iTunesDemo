@@ -10,10 +10,15 @@ import Hero
 
 protocol CurrentSongVCDelegate: AnyObject {
     func updatePlayingData()
-    func updateSearchingVCTBV()
+    func updateSearchingVCTBV(currentIndex: Int)
 }
 
 class CurrentSongViewController: BaseViewController {
+    
+    enum PlayDirection {
+        case next
+        case previous
+    }
     
     private lazy var backButton: UIButton = {
         let btn = UIButton()
@@ -48,6 +53,16 @@ class CurrentSongViewController: BaseViewController {
         vw.layer.cornerRadius = 8
         return vw
     }()
+    private lazy var playNextButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(R.image.icon_next()!, for: .normal)
+        return btn
+    }()
+    private lazy var playPreviousButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(R.image.icon_previous()!, for: .normal)
+        return btn
+    }()
     private lazy var slider: UISlider = {
         let slider = UISlider()
         slider.isContinuous = false
@@ -60,7 +75,8 @@ class CurrentSongViewController: BaseViewController {
     
     var heroid = "0"
     weak var delegate: CurrentSongVCDelegate?
-    private var resultData = Results()
+    private var resultData = [Results]()
+    private var currentSong = 0
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +86,7 @@ class CurrentSongViewController: BaseViewController {
         PlayerManager.shared.setupRemoteTransportControls()
         PlayerManager.shared.delegate = self
         if !btnPlay.isSelected {
-            PlayerManager.shared.playMusic(currentSong: self.resultData)
+            PlayerManager.shared.playMusic(currentSong: self.resultData[currentSong])
         }
     }
 }
@@ -84,6 +100,8 @@ private extension CurrentSongViewController {
         view.addSubview(lbArtistName)
         view.addSubview(playerBg)
         playerBg.addSubview(btnPlay)
+        playerBg.addSubview(playNextButton)
+        playerBg.addSubview(playPreviousButton)
         playerBg.addSubview(slider)
         playerBg.addSubview(lbMinTime)
         playerBg.addSubview(lbMaxTime)
@@ -129,6 +147,16 @@ private extension CurrentSongViewController {
             make.right.equalTo(slider)
             make.top.equalTo(slider.snp.bottom).offset(5)
         }
+        playNextButton.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.centerY.equalTo(btnPlay)
+            make.left.equalTo(btnPlay.snp.right).offset(15)
+        }
+        playPreviousButton.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.centerY.equalTo(btnPlay)
+            make.right.equalTo(btnPlay.snp.left).offset(-15)
+        }
     }
     
     func setHeroID(_ id: String) {
@@ -156,7 +184,7 @@ private extension CurrentSongViewController {
         btnPlay.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             if !self.btnPlay.isSelected {
-                PlayerManager.shared.playMusic(currentSong: self.resultData)
+                PlayerManager.shared.playMusic(currentSong: self.resultData[self.currentSong])
             } else {
                 PlayerManager.shared.player.pause()
             }
@@ -164,8 +192,18 @@ private extension CurrentSongViewController {
         
         backButton.rx.tap.subscribe(onNext: { [weak self] in
             guard let self = self else { return }
-            self.delegate?.updateSearchingVCTBV()
+            self.delegate?.updateSearchingVCTBV(currentIndex: self.currentSong)
             self.dismissViewController()
+        }).disposed(by: disposeBag)
+        
+        playNextButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.switchSong(to: .next)
+        }).disposed(by: disposeBag)
+        
+        playPreviousButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.switchSong(to: .previous)
         }).disposed(by: disposeBag)
     }
     
@@ -174,15 +212,40 @@ private extension CurrentSongViewController {
             PlayerManager.shared.seekTo(Double(sender.value))
         }
     }
+    
+    func switchSong(to status: PlayDirection) {
+        switch status {
+        case .next:
+            if resultData.count - 1 != currentSong {
+                currentSong += 1
+            }
+        case .previous:
+            if currentSong != 0 {
+                currentSong -= 1
+            }
+        }
+        let currentData = resultData[currentSong]
+        self.lbTitle.text = currentData.trackName ?? "No Title"
+        self.lbArtistName.text = currentData.artistName ?? "-"
+        if let url = currentData.artworkUrl100 {
+            ivPhoto.kf.setImage(with: URL(string: url), placeholder:  R.image.empty_photo()!.opacity(0.5))
+        }
+        self.isPlaying(currentData.isPlaying)
+        PlayerManager.shared.playMusic(currentSong: self.resultData[self.currentSong])
+        self.delegate?.updatePlayingData()
+    }
 }
 //MARK: - Function
 extension CurrentSongViewController {
-    func setupView(heroID: String, data: Results, photo: UIImage) {
+    func setupView(heroID: String, data: [Results], indexPath: IndexPath, photo: UIImage) {
         ivPhoto.image = photo
         self.resultData = data
-        self.lbTitle.text = data.trackName ?? "No Title"
-        self.lbArtistName.text = data.artistName ?? "-"
-        self.isPlaying(data.isPlaying)
+        self.currentSong = indexPath.row
+        print("currentSong = ", currentSong)
+        let currentData = resultData[currentSong]
+        self.lbTitle.text = currentData.trackName ?? "No Title"
+        self.lbArtistName.text = currentData.artistName ?? "-"
+        self.isPlaying(currentData.isPlaying)
     }
 }
 //MARK: - PaulPlayerDelegate
@@ -209,7 +272,7 @@ extension CurrentSongViewController: PaulPlayerDelegate {
             break
         case .PlayerDidToPlayNotification:
             self.isPlaying(true)
-            self.resultData.isPlaying = true
+            self.resultData[currentSong].isPlaying = true
         case .PlayerFailedNotification:
             let alert = UIAlertController(title: "警告⚠️", message: "無法播放", preferredStyle: .alert)
             let action = UIAlertAction(title: "確認", style: .default, handler: nil)
@@ -217,7 +280,7 @@ extension CurrentSongViewController: PaulPlayerDelegate {
             self.present(alert, animated: true, completion: nil)
         case .PauseNotification:
             self.isPlaying(false)
-            self.resultData.isPlaying = false
+            self.resultData[currentSong].isPlaying = false
         case .PlayerPlayFinishNotification:
             PlayerManager.shared.stopPlayer()
         default:
