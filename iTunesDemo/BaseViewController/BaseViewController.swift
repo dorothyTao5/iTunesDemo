@@ -48,11 +48,31 @@ extension BaseViewController {
             navigationItem.setRightBarButton(btnBack, animated: true)
         }
     }
+    
+    func configureNavigationAppearance(color: UIColor?, foregroundColor: UIColor = .white) {
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithTransparentBackground()
+            appearance.backgroundColor = color
+            appearance.shadowColor = nil
+            appearance.titleTextAttributes = [.foregroundColor: foregroundColor, .font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        } else {
+            navigationController?.navigationBar.shadowImage = UIImage()
+            navigationController?.navigationBar.barTintColor = color
+        }
+    }
+    
+    func setUpAttribute(title:String, in color:UIColor) {
+        let titleAttr = [NSAttributedString.Key.foregroundColor: color]
+        navigationItem.title = title
+        navigationController?.navigationBar.titleTextAttributes = titleAttr
+    }
 }
 //MARK: - @objc Functions
 extension BaseViewController {
     @objc func popViewController() {
-//        navigationController?.base?.popViewController(animated: true)
         navigationController?.popViewController(animated: true)
     }
 

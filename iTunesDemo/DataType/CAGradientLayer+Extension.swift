@@ -9,36 +9,36 @@ import UIKit
 
 enum GradientType: Int {
     case clear = -1
-    case red = 0
-    case orange = 1
-    case yellow
-    case green
-    case blue
-    case purple
+    case blueSix = 0
+    case blueFive = 1
+    case blueFour
+    case blueThree
+    case blueTwo
+    case blueOne
     
     var colorSet:[CGColor] {
         switch self {
         case .clear:
             return [UIColor.clear.cgColor,
                     UIColor.clear.cgColor]
-        case .red:
+        case .blueSix:
             return [R.color.white_black()!.cgColor,
-                    R.color.red_fbf2f2()!.cgColor]
-        case .orange:
+                    R.color.blueSix()!.cgColor]
+        case .blueFive:
             return [R.color.white_black()!.cgColor,
-                    R.color.oriange_f8efe2()!.cgColor]
-        case .yellow:
+                    R.color.blueFive()!.cgColor]
+        case .blueFour:
             return [R.color.white_black()!.cgColor,
-                    R.color.yellow_fdfde8()!.cgColor]
-        case .green:
+                    R.color.blueFour()!.cgColor]
+        case .blueThree:
             return [R.color.white_black()!.cgColor,
-                    R.color.green_eff9eb()!.cgColor]
-        case .blue:
+                    R.color.blueThree()!.cgColor]
+        case .blueTwo:
             return [R.color.white_black()!.cgColor,
-                    R.color.blue_e8f2f5()!.cgColor]
-        case .purple:
+                    R.color.blueTwo()!.cgColor]
+        case .blueOne:
             return [R.color.white_black()!.cgColor,
-                    R.color.purple_eeeef7()!.cgColor]
+                    R.color.blueOne()!.cgColor]
         }
     }
 }

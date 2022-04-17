@@ -105,7 +105,7 @@ struct R: Rswift.Validatable {
   }
   #endif
 
-  /// This `R.color` struct is generated, and contains static references to 11 colors.
+  /// This `R.color` struct is generated, and contains static references to 17 colors.
   struct color {
     /// Color `AccentColor`.
     static let accentColor = Rswift.ColorResource(bundle: R.hostingBundle, name: "AccentColor")
@@ -113,6 +113,18 @@ struct R: Rswift.Validatable {
     static let black_blue = Rswift.ColorResource(bundle: R.hostingBundle, name: "black_blue")
     /// Color `black_white`.
     static let black_white = Rswift.ColorResource(bundle: R.hostingBundle, name: "black_white")
+    /// Color `blueFive`.
+    static let blueFive = Rswift.ColorResource(bundle: R.hostingBundle, name: "blueFive")
+    /// Color `blueFour`.
+    static let blueFour = Rswift.ColorResource(bundle: R.hostingBundle, name: "blueFour")
+    /// Color `blueOne`.
+    static let blueOne = Rswift.ColorResource(bundle: R.hostingBundle, name: "blueOne")
+    /// Color `blueSix`.
+    static let blueSix = Rswift.ColorResource(bundle: R.hostingBundle, name: "blueSix")
+    /// Color `blueThree`.
+    static let blueThree = Rswift.ColorResource(bundle: R.hostingBundle, name: "blueThree")
+    /// Color `blueTwo`.
+    static let blueTwo = Rswift.ColorResource(bundle: R.hostingBundle, name: "blueTwo")
     /// Color `blue_e8f2f5`.
     static let blue_e8f2f5 = Rswift.ColorResource(bundle: R.hostingBundle, name: "blue_e8f2f5")
     /// Color `green_eff9eb`.
@@ -154,6 +166,60 @@ struct R: Rswift.Validatable {
     @available(iOS 11.0, *)
     static func black_white(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
       return UIKit.UIColor(resource: R.color.black_white, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "blueFive", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func blueFive(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.blueFive, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "blueFour", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func blueFour(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.blueFour, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "blueOne", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func blueOne(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.blueOne, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "blueSix", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func blueSix(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.blueSix, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "blueThree", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func blueThree(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.blueThree, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "blueTwo", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func blueTwo(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.blueTwo, compatibleWith: traitCollection)
     }
     #endif
 
@@ -250,6 +316,54 @@ struct R: Rswift.Validatable {
     @available(watchOSApplicationExtension 4.0, *)
     static func black_white(_: Void = ()) -> UIKit.UIColor? {
       return UIKit.UIColor(named: R.color.black_white.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "blueFive", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func blueFive(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.blueFive.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "blueFour", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func blueFour(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.blueFour.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "blueOne", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func blueOne(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.blueOne.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "blueSix", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func blueSix(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.blueSix.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "blueThree", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func blueThree(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.blueThree.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "blueTwo", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func blueTwo(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.blueTwo.name)
     }
     #endif
 

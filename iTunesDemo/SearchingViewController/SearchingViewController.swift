@@ -22,11 +22,11 @@ class SearchingViewController: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.backgroundView = EmptyView(withType: .noResult, onPosition: .upper)
+        tableView.tableHeaderView = searchView
         return tableView
     }()
     
     private let dataSource = SearchingDataSource()
-    private var delegate = SearchingDataSource()
     
     private var viewModel = SearchingViewModel()
 //MARK: - Life Cycle
@@ -43,19 +43,16 @@ class SearchingViewController: BaseViewController {
 //MARK: - Private Extension
 private extension SearchingViewController {
     func setupUI() {
+        configureNavigationAppearance(color: .clear, foregroundColor: R.color.black_white()!.withAlphaComponent(0.4))
         view.backgroundColor = R.color.white_black()
         
-        view.addSubview(searchView)
         view.addSubview(tableView)
 
         searchView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.left.right.equalToSuperview().inset(20)
-            make.height.equalTo(48)
+            make.height.equalTo(52)
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(searchView.snp.bottom).offset(10)
-            make.right.bottom.left.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -106,6 +103,16 @@ private extension SearchingViewController {
         
         dataSource.presentVCCallback = { vc in
             self.present(vc, animated: true, completion: nil)
+        }
+        
+        dataSource.didScrollCallback = { [weak self] int in
+            guard let self = self else { return }
+            if int == 0 {
+                self.setUpAttribute(title: self.searchView.textFeild.text ?? "", in: R.color.black_white()!)
+            } else {
+                self.setUpAttribute(title: "", in: R.color.white_black()!)
+            }
+            
         }
     }
 }

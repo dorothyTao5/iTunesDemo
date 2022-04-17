@@ -9,13 +9,13 @@ import UIKit
 
 class CustomTextFieldView: UIView {
 
-    private lazy var textFeild: UITextField = {
+    lazy var textFeild: UITextField = {
         let tf = UITextField()
         tf.addPadding(10, withIcon: R.image.icon_search()!, at: .left)
         tf.placeholder = "Artists or songs"
         tf.layer.borderWidth = 1
-        tf.layer.borderColor = R.color.black_blue()!.cgColor
         tf.layer.cornerRadius = 4
+        tf.layer.borderColor = tfEndEditingBorderColor
         tf.tintColor = R.color.black_white()!
         tf.returnKeyType = .done
         tf.delegate = self
@@ -23,6 +23,7 @@ class CustomTextFieldView: UIView {
     }()
     
     private var debounceTimer: Timer?
+    private var tfEndEditingBorderColor = R.color.black_white()!.withAlphaComponent(0.2).cgColor
     var endEditingCallback: ((String) -> Void)?
     var beginEditing: (() -> Void)?
 //MARK: - Life Cycle
@@ -34,11 +35,6 @@ class CustomTextFieldView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func layoutSubviews() {
-        textFeild.layer.borderColor = R.color.black_blue()!.cgColor
-        textFeild.tintColor = R.color.black_white()!
-    }
 }
 //MARK: - Private Extension
 private extension CustomTextFieldView {
@@ -46,16 +42,23 @@ private extension CustomTextFieldView {
         addSubview(textFeild)
         
         textFeild.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.left.right.equalToSuperview().inset(20)
+            make.top.bottom.equalToSuperview().inset(4)
+            make.width.equalTo(UIScreen.main.bounds.width - 40)
         }
     }
 }
 //MARK: - UITextFieldDelegate
 extension CustomTextFieldView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = R.color.black_white()!.withAlphaComponent(0.6).cgColor
         beginEditing?()
     }
 
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderColor = tfEndEditingBorderColor
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
     }

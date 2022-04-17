@@ -45,7 +45,7 @@ class SearchingTBVCell: UITableViewCell {
 //MARK: - Life Cycle
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradientLayer.setGradient(color: GradientType(rawValue: colorIndex) ?? .red, layoutDirection: .landscape)
+        gradientLayer.setGradient(color: GradientType(rawValue: colorIndex) ?? .blueSix, layoutDirection: .landscape)
         gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: contentView.frame.height)
         contentView.layer.insertSublayer(gradientLayer, at: 0)
         contentView.backgroundColor = .clear
@@ -121,7 +121,7 @@ private extension SearchingTBVCell {
 extension SearchingTBVCell {
     func setupCell(data: Results, colorIndex: Int) {
         self.colorIndex = colorIndex
-        gradientLayer.setGradient(color: GradientType(rawValue: colorIndex) ?? .red, layoutDirection: .landscape)
+        gradientLayer.setGradient(color: GradientType(rawValue: colorIndex) ?? .blueSix, layoutDirection: .landscape)
         if let url = data.artworkUrl100 {
             ivPhoto.kf.setImage(with: URL(string: url), placeholder:  R.image.empty_photo()!.opacity(0.5))
         }

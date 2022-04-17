@@ -15,6 +15,7 @@ class SearchingDataSource: NSObject, UITableViewDataSource {
     var playPauseCallback: ((MusicIndexes) -> Void)?
     var presentVCCallback: ((UIViewController) -> Void)?
     var updateTbvCallback: (() -> Void)?
+    var didScrollCallback: ((Int) -> Void)?
 //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchOutput.results.count
@@ -60,6 +61,15 @@ extension SearchingDataSource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNonzeroMagnitude
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yPosition = scrollView.contentOffset.y
+        if yPosition >= 48 {
+            didScrollCallback?(0)
+        } else if yPosition < 48 {
+           didScrollCallback?(1)
+        }
     }
 }
 //MARK: - CurrentSongVCDelegate
