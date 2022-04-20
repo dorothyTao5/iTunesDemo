@@ -434,7 +434,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 11 images.
+  /// This `R.image` struct is generated, and contains static references to 13 images.
   struct image {
     /// Image `button_back_normal`.
     static let button_back_normal = Rswift.ImageResource(bundle: R.hostingBundle, name: "button_back_normal")
@@ -458,6 +458,10 @@ struct R: Rswift.Validatable {
     static let icon_stop = Rswift.ImageResource(bundle: R.hostingBundle, name: "icon_stop")
     /// Image `img_note`.
     static let img_note = Rswift.ImageResource(bundle: R.hostingBundle, name: "img_note")
+    /// Image `tab_search`.
+    static let tab_search = Rswift.ImageResource(bundle: R.hostingBundle, name: "tab_search")
+    /// Image `tab_setting`.
+    static let tab_setting = Rswift.ImageResource(bundle: R.hostingBundle, name: "tab_setting")
 
     #if os(iOS) || os(tvOS)
     /// `UIImage(named: "button_back_normal", bundle: ..., traitCollection: ...)`
@@ -533,6 +537,20 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "img_note", bundle: ..., traitCollection: ...)`
     static func img_note(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.img_note, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "tab_search", bundle: ..., traitCollection: ...)`
+    static func tab_search(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.tab_search, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "tab_setting", bundle: ..., traitCollection: ...)`
+    static func tab_setting(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.tab_setting, compatibleWith: traitCollection)
     }
     #endif
 

@@ -85,7 +85,7 @@ class CurrentSongViewController: BaseViewController {
         eventHandler()
         PlayerManager.shared.setupRemoteTransportControls()
         PlayerManager.shared.delegate = self
-        if !btnPlay.isSelected {
+        if !btnPlay.isSelected && !resultData.isEmpty {
             PlayerManager.shared.playMusic(currentSong: self.resultData[currentSong])
         }
     }

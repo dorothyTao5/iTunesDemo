@@ -39,6 +39,11 @@ class SearchingViewController: BaseViewController {
         dataSourceEventHandler()
         setupBindings()
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.updateTableViewHeaderHeight()
+    }
 }
 //MARK: - Private Extension
 private extension SearchingViewController {

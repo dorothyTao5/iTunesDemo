@@ -15,6 +15,7 @@ class CustomTextFieldView: UIView {
         tf.placeholder = "Artists or songs"
         tf.layer.borderWidth = 1
         tf.layer.cornerRadius = 4
+        tf.layer.borderColor = UIColor.clear.cgColor
         tf.tintColor = R.color.black_white()!
         tf.backgroundColor = R.color.black_white()!.withAlphaComponent(0.1)
         tf.returnKeyType = .done
