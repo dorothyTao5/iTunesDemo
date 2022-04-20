@@ -15,15 +15,14 @@ class CustomTextFieldView: UIView {
         tf.placeholder = "Artists or songs"
         tf.layer.borderWidth = 1
         tf.layer.cornerRadius = 4
-        tf.layer.borderColor = tfEndEditingBorderColor
         tf.tintColor = R.color.black_white()!
+        tf.backgroundColor = R.color.black_white()!.withAlphaComponent(0.1)
         tf.returnKeyType = .done
         tf.delegate = self
         return tf
     }()
     
     private var debounceTimer: Timer?
-    private var tfEndEditingBorderColor = R.color.black_white()!.withAlphaComponent(0.2).cgColor
     var endEditingCallback: ((String) -> Void)?
     var beginEditing: (() -> Void)?
 //MARK: - Life Cycle
@@ -56,7 +55,7 @@ extension CustomTextFieldView: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderColor = tfEndEditingBorderColor
+        textField.layer.borderColor = UIColor.clear.cgColor
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
