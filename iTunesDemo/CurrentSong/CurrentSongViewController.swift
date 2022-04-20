@@ -89,6 +89,11 @@ class CurrentSongViewController: BaseViewController {
             PlayerManager.shared.playMusic(currentSong: self.resultData[currentSong])
         }
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        playerBg.layer.borderColor = R.color.black_white()!.withAlphaComponent(0.2).cgColor
+    }
 }
 //MARK: - Private Functions
 private extension CurrentSongViewController {
